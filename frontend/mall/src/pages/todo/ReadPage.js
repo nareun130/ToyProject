@@ -32,8 +32,10 @@ const ReadPage = () => {
   },[page, size])
 
   return (
-    <div className="text-3xl font-extrabold">
-      Todo Read Page Component {tno}
+    <div className="text-3xl font-extrabold w-full bg-white mt-6">
+      <div className="text-2xl">
+        Todo Read Page Component {tno}
+      </div>
       <ReadComponent tno={tno}></ReadComponent>
     </div>
   );
