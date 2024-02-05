@@ -1,11 +1,19 @@
 package org.nareun130.mallapi.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.nareun130.mallapi.domain.Todo;
+import org.nareun130.mallapi.dto.PageRequestDTO;
+import org.nareun130.mallapi.dto.PageResponseDTO;
 import org.nareun130.mallapi.dto.TodoDTO;
 import org.nareun130.mallapi.repository.TodoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -23,6 +31,9 @@ public class TodoServiceImpl implements TodoService{
 
     private final TodoRepository todoRepository;
 
+    /*
+     * 등록
+     */
     @Override
     public Long register(TodoDTO todoDTO) {
         log.info("-------------------------------TodoServiceImpl------------------------------------");
@@ -34,6 +45,9 @@ public class TodoServiceImpl implements TodoService{
         return savedTodo.getTno();
     }
 
+    /*
+     * 조회
+     */
     @Override
     public TodoDTO get(Long tno) {
 
@@ -46,6 +60,9 @@ public class TodoServiceImpl implements TodoService{
         return dto;
     }
 
+    /*
+     * 수정
+     */
     @Override
     public void modify(TodoDTO todoDTO) {
         
@@ -60,11 +77,43 @@ public class TodoServiceImpl implements TodoService{
         todoRepository.save(todo);
     }
 
+    /*
+     * 삭제
+     */
     @Override
     public void remove(Long tno) {
         
         todoRepository.deleteById(tno);
         
+    }
+
+    /*
+     * 목록
+     */
+    @Override
+    public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO) {
+        
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() -1, //! 주의 :  1페이지가 0
+                pageRequestDTO.getSize(), 
+                Sort.by("tno").descending());
+
+        Page<Todo> result = todoRepository.findAll(pageable);
+
+        List<TodoDTO> dtoList = result.getContent().stream()
+            .map(todo -> modelMapper.map(todo,TodoDTO.class))
+            .collect(Collectors.toList());
+
+        long totalCount = result.getTotalElements();
+
+        PageResponseDTO<TodoDTO> responseDTO = 
+            PageResponseDTO.<TodoDTO>withAll()
+                .dtoList(dtoList)
+                .pageRequestDTO(pageRequestDTO)
+                .totalCount(totalCount)
+                .build();
+
+        return responseDTO;
     }
     
 }

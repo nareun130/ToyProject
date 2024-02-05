@@ -3,6 +3,8 @@ package org.nareun130.mallapi.repository;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
+import org.nareun130.mallapi.dto.PageRequestDTO;
+import org.nareun130.mallapi.dto.PageResponseDTO;
 import org.nareun130.mallapi.dto.TodoDTO;
 import org.nareun130.mallapi.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +76,20 @@ public class TodoServiceTests {
         todoService.remove(tno);
 
         log.info(tno);
+    }
+
+    /*
+     * todo 목록 테스트
+     */
+    @Test
+    public void testList() {
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()   
+            .page(2)
+            .size(10)
+            .build();
+        PageResponseDTO<TodoDTO> response = todoService.list(pageRequestDTO);
+
+        log.info(response );
     }
 }
