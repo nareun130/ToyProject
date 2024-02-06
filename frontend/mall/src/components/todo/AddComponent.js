@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { postAdd } from "../../api/todoApi";
 
 const initState = {
   title: "",
@@ -11,12 +12,18 @@ const AddComponent = () => {
 
   const handleChangeTodo = (e) => {
     todo[e.target.name] = e.target.value;
-
     setTodo({ ...todo });
   };
 
   const handleClickAdd = () => {
-    console.log(todo);
+    // console.log(todo);
+    postAdd(todo)
+        .then(result => {
+            console.log(result)
+            setTodo({...initState})
+        }).catch(e => {
+            console.log(e)
+        })
   };
 
   return (
