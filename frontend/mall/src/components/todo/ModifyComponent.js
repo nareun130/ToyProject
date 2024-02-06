@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getOne } from "../../api/todoApi";
+import { deleteOne, getOne, putOne } from "../../api/todoApi";
 
 const initState = {
   tno: 0,
@@ -12,10 +12,27 @@ const initState = {
 const ModifyComponent = ({ tno, moveList, moveRead }) => {
   const [todo, setTodo] = useState({ ...initState });
 
+  //* 모달 창을 위한 상태
+  const [result, setResult] = useState(null)
+  
   useEffect(() => {
     getOne(tno).then((data) => setTodo(data));
   }, [tno]);
 
+  const handleClickModify = () => { 
+
+    putOne(todo).then(data => {
+        console.log('modify result :' + data)
+    })
+  }
+
+  const handleClickDelete = () => {
+
+    deleteOne(tno).then(data => {
+        console.log("delete result : " + data)
+    })
+  }
+  
   const handleChangeTodo = (e) => {
     todo[e.target.name] = e.target.value;
 
@@ -87,10 +104,12 @@ const ModifyComponent = ({ tno, moveList, moveRead }) => {
         </div>
       </div>
       <div className="flex justify-end p-4">
-        <button className="rounded p-4 m-2 text-xl w-32 text-white bg-red-500">
+        <button className="rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
+        onClick={handleClickDelete}>
           Delete
         </button>
-        <button className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500">
+        <button className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+        onClick={handleClickModify}>
           Modify
         </button>
       </div>
