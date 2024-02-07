@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/ap/products")
+@RequestMapping("/api/products")
 public class ProductController {
     
     private final CustomFileUtil fileUtil;
