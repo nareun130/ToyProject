@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.bytebuddy.utility.FileSystem;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Component
@@ -86,7 +85,8 @@ public class CustomFileUtil {
     }
 
     //* 스프링에서 제공하는 Resource객체의 ResponseEntity 반환 -> 썸네일 이미지 확인위함
-    public ResponseEntity<Resource> getFile(String fileName) {
+    //? 파일 조회 메서드
+    public ResponseEntity<Resource> getFile(String fileName) { 
 
         Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
 
@@ -103,5 +103,29 @@ public class CustomFileUtil {
             return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+    /* 첨부 파일 삭제 메서드 
+    * Controller || Service에서 db 작업이 완료된 후에 필요없는 파일들을 삭제하는 용도
+    */
+    public void deleteFile(List<String> fileNames) {
+        if(fileNames == null || fileNames.size() == 0) {
+            return;
+        }
+        
+        fileNames.forEach(fileName -> {
+            //* 썸네일이 있는지 확인하고 삭제
+            String thumbnailFileName = "s_" +fileName;
+            Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
+            Path filePath = Paths.get(uploadPath, thumbnailFileName);
+
+            try {
+                Files.deleteIfExists(filePath);
+                Files.deleteIfExists(thumbnailPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            
+        });
     }
 }
