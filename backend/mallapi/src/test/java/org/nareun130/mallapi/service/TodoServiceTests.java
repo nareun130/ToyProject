@@ -1,4 +1,4 @@
-package org.nareun130.mallapi.repository;
+package org.nareun130.mallapi.service;
 
 import java.time.LocalDate;
 

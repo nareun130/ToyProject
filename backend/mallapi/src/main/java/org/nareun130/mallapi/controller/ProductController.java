@@ -3,7 +3,10 @@ package org.nareun130.mallapi.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.nareun130.mallapi.dto.PageRequestDTO;
+import org.nareun130.mallapi.dto.PageResponseDTO;
 import org.nareun130.mallapi.dto.ProductDTO;
+import org.nareun130.mallapi.service.ProductService;
 import org.nareun130.mallapi.util.CustomFileUtil;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +26,16 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/api/products")
 public class ProductController {
     
+    private final ProductService productService;
     private final CustomFileUtil fileUtil;
+
+    @GetMapping("/list")
+    public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO) {
+
+        log.info("list..............." + pageRequestDTO);
+
+        return productService.getList(pageRequestDTO);
+    }
 
     @PostMapping("/")
     public Map<String, String> register(ProductDTO productDTO){
