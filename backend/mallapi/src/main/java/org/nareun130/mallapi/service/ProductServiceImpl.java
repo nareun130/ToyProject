@@ -65,5 +65,39 @@ public class ProductServiceImpl implements ProductService{
             .pageRequestDTO(pageRequestDTO)
             .build();
     }
+
+    @Override
+    public Long register(ProductDTO productDTO) {
+        
+        Product product = dtoToEntity(productDTO);
+
+        Product result = productRepository.save(product);
+
+        return result.getPno();
+        
+    }
+
+    private Product dtoToEntity(ProductDTO productDTO) {
+
+        Product product = Product.builder()
+            .pno(productDTO.getPno())
+            .pname(productDTO.getPname())
+            .pdesc(productDTO.getPdesc())
+            .price(productDTO.getPrice())
+            .build();
+
+            //* 업로드 처리가 끝난 파일들의 이름 리스트
+            List<String> uploadFileNames = productDTO.getUploadFileNames();
+
+            if(uploadFileNames == null) {
+                return product;
+            }
+
+            uploadFileNames.stream().forEach(uploadName -> {
+                product.addImageString(uploadName);
+            });
+
+            return product;
+    }
     
 }

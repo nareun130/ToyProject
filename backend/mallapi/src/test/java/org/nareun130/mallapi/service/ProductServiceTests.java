@@ -1,5 +1,8 @@
 package org.nareun130.mallapi.service;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.nareun130.mallapi.dto.PageRequestDTO;
 import org.nareun130.mallapi.dto.PageResponseDTO;
@@ -26,6 +29,23 @@ public class ProductServiceTests {
         result.getDtoList().forEach(dto -> log.info(dto));
     }
 
+    @Test
+    public void testRegister() {
+
+        ProductDTO productDTO = ProductDTO.builder()    
+            .pname("새로운 상품")
+            .pdesc("신규 추가 상품")
+            .price(1000)
+            .build();
+
+        //! uuid 필요!
+        productDTO.setUploadFileNames(
+            List.of(
+                UUID.randomUUID()+"_" + "TEST1.jpg",
+                UUID.randomUUID()+"_" + "TEST2.jpg"));
+        
+        productService.register(productDTO);
+    }
     
 
     
