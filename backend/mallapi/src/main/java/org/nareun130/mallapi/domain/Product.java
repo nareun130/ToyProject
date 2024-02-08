@@ -36,7 +36,7 @@ public class Product {
 
     private boolean delFlag;
 
-    @ElementCollection
+    @ElementCollection //* 값 타입 럴렉션
     @Builder.Default
     private List<ProductImage> imageList = new ArrayList<>();
 
@@ -58,11 +58,15 @@ public class Product {
     }
 
     public void addImageString(String fileName) {
-        
+
         ProductImage productImage = ProductImage.builder()
             .fileName(fileName)
             .build();
             addImage(productImage);
+    }
+
+    public void clearList() {
+        this.imageList.clear();;
     }
 
 }
