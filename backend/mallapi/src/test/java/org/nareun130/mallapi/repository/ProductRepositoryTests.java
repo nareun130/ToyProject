@@ -55,4 +55,18 @@ public class ProductRepositoryTests {
         log.info(product.getImageList());
 
     }
+
+    @Test // ~> DB를 한번만 타도록 
+    public void testRead2() {
+
+        Long pno = 1L;
+
+        Optional<Product> result = productRepository.selectOne(pno);
+
+        Product product = result.orElseThrow();
+
+        log.info(product);
+        log.info(product.getImageList());
+
+    }
 }
