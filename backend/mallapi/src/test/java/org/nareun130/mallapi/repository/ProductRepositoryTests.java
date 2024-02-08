@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.nareun130.mallapi.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j2;
@@ -68,5 +69,14 @@ public class ProductRepositoryTests {
         log.info(product);
         log.info(product.getImageList());
 
+    }
+
+    @Commit // * test 후 커밋하도록
+    @Transactional
+    @Test
+    public void testDelete() {
+        Long pno = 2L;
+
+        productRepository.updateToDelete(pno, true);
     }
 }
