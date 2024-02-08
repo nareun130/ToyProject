@@ -1,11 +1,13 @@
 package org.nareun130.mallapi.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.nareun130.mallapi.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -37,5 +39,20 @@ public class ProductRepositoryTests {
         }
 
         
+    }
+
+    @Transactional //* db를 2번 타야해서 Transactional 처리
+    @Test
+    public void testRead() {
+
+        Long pno = 1L;
+
+        Optional<Product> result = productRepository.findById(pno);
+
+        Product product = result.orElseThrow();
+
+        log.info(product);
+        log.info(product.getImageList());
+
     }
 }

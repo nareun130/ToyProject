@@ -18,7 +18,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "tbl_product")
 @Getter
-@ToString(exclude = "imageList")
+@ToString(exclude = "imageList") //! imageList를 제외하고 가져온다.
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,7 +36,7 @@ public class Product {
 
     private boolean delFlag;
 
-    @ElementCollection //* 값 타입 럴렉션
+    @ElementCollection //* 값 타입 럴렉션 -> 기본적으로 lazy loading 방식으로 동작
     @Builder.Default
     private List<ProductImage> imageList = new ArrayList<>();
 
