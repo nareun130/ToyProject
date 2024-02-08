@@ -36,6 +36,10 @@ public class Product {
 
     private boolean delFlag;
 
+    public void changeDel(boolean delFlag) {
+        this.delFlag = delFlag;
+    }
+
     @ElementCollection //* 값 타입 럴렉션 -> 기본적으로 lazy loading 방식으로 동작
     @Builder.Default
     private List<ProductImage> imageList = new ArrayList<>();

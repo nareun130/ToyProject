@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    public Map<String, String> register(ProductDTO productDTO){
+    public Map<String, Long> register(ProductDTO productDTO){
         
         log.info("register: " + productDTO); 
 
@@ -50,7 +50,10 @@ public class ProductController {
 
         log.info(uploadFileNames);
 
-        return Map.of("RESULT", "SUCCESS");
+        //서비스 호출
+        Long pno = productService.register(productDTO);
+
+        return Map.of("RESULT", pno);
     }
 
     @GetMapping("/view/{fileName}")
