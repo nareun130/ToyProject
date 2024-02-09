@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import org.nareun130.mallapi.domain.Product;
 import org.nareun130.mallapi.dto.PageRequestDTO;
 import org.nareun130.mallapi.dto.PageResponseDTO;
 import org.nareun130.mallapi.dto.ProductDTO;
@@ -47,6 +48,16 @@ public class ProductServiceTests {
         productService.register(productDTO);
     }
     
+    @Test
+    public void testRead() {
+
+        Long pno = 12L;
+
+        ProductDTO productDTO = productService.get(pno);
+        
+        log.info(productDTO);
+        log.info(productDTO.getUploadFileNames());
+    }
 
     
 }
