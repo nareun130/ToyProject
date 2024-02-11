@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class ProductDTO {
 
     private boolean delFlag;
 
+    @Size(min = 1, message = "이미지를 1개 이상 첨부하여야 합니다.")
     @Builder.Default
     private List<MultipartFile> files = new ArrayList<>();
 

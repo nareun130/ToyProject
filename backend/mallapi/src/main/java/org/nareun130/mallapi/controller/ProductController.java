@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -41,9 +42,10 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    public Map<String, Long> register(ProductDTO productDTO){
+    public Map<String, Long> register(@Valid ProductDTO productDTO){
         
         log.info("register: " + productDTO); 
+        log.info("file 사이즈 :" + productDTO.getFiles().size());
 
         List<MultipartFile> files = productDTO.getFiles();
 
