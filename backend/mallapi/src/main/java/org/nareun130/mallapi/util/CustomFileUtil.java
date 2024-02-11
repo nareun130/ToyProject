@@ -108,7 +108,7 @@ public class CustomFileUtil {
     /* 첨부 파일 삭제 메서드 
     * Controller || Service에서 db 작업이 완료된 후에 필요없는 파일들을 삭제하는 용도
     */
-    public void deleteFile(List<String> fileNames) {
+    public void deleteFiles(List<String> fileNames) {
         if(fileNames == null || fileNames.size() == 0) {
             return;
         }
