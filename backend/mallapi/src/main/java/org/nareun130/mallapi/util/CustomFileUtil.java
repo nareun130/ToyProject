@@ -117,7 +117,7 @@ public class CustomFileUtil {
             //* 썸네일이 있는지 확인하고 삭제
             String thumbnailFileName = "s_" +fileName;
             Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
-            Path filePath = Paths.get(uploadPath, thumbnailFileName);
+            Path filePath = Paths.get(uploadPath, fileName);
 
             try {
                 Files.deleteIfExists(filePath);
