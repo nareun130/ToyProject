@@ -1,6 +1,5 @@
 package org.nareun130.mallapi.service;
 
-import org.nareun130.mallapi.domain.Product;
 import org.nareun130.mallapi.dto.PageRequestDTO;
 import org.nareun130.mallapi.dto.PageResponseDTO;
 import org.nareun130.mallapi.dto.ProductDTO;
@@ -15,4 +14,6 @@ public interface ProductService {
 
 
     ProductDTO get(Long pno);
+
+    void modify(ProductDTO productDTO);
 }
