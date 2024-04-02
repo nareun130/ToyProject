@@ -5,7 +5,8 @@ const Loading:ReactNode = <div>Loading....</div>
 const TodoList:ComponentType = lazy(() => import("../pages/todo/ListPage"))
 const TodoRead:ComponentType = lazy(() => import("../pages/todo/ReadPage"))
 
-// const TodoAdd:ComponentType = lazy(() => import("../pages/todo/AddPage"))
+const TodoAdd:ComponentType = lazy(() => import("../pages/todo/AddPage"))
+const TodoModify:ComponentType = lazy(()=> import("../pages/todo/ModifyPage"))
 
 const todoRouter = ():Array<{path:string, element:ReactElement}> => {
 
@@ -23,10 +24,14 @@ const todoRouter = ():Array<{path:string, element:ReactElement}> => {
             path: "read/:tno",
             element: <Suspense fallback={Loading}><TodoRead/></Suspense>
         },
-        // {
-        //     path: "add",
-        //     element: <Suspense fallback={Loading}><TodoAdd/></Suspense>
-        // },
+        {
+            path: "add",
+            element: <Suspense fallback={Loading}><TodoAdd/></Suspense>
+        },
+        {
+            path:"modify/:tno",
+            element:<Suspense fallback={Loading}><TodoModify></TodoModify></Suspense>
+        }
 
     ]
 
