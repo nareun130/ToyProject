@@ -20,8 +20,10 @@ class TodoRepositoryTests {
     @Autowired
     private lateinit var todoRepository: TodoRepository
 
-//
-    val log = LoggerFactory.getLogger(TodoRepositoryTests::class.java)
+//val log = LoggerFactory.getLogger(TodoRepositoryTests::class.java)
+    companion object{
+        val log = LoggerFactory.getLogger(TodoRepositoryTests::class.java)
+    }
 
     @Test
     fun testInsert(){

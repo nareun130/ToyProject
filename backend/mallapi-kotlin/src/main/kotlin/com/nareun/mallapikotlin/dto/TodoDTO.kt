@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDate
 
 data class TodoDTO (
-    var tno:Long ?=null,
+    var tno:Long, // null 허용 x
     var title: String?=null,
     var writer: String?=null,
     var complete:Boolean = false,

@@ -8,7 +8,9 @@ import java.time.LocalDate
 data class Todo(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val tno: Long?=null,
+//    val tno: Long?= null, // null을 허용
+//    val tno :Long = 0,
+        val tno : Long?=null,
 
     var title: String,
 

@@ -16,7 +16,7 @@ const ReadPage:React.FC<Record<string, never>> = () => {
 
     const size: string = queryParams.get('size')||'10'
    
-    
+    //* read -> modfiy로 이동 시 queryString유지 하려고
     const queryStr: string = createSearchParams({page,size}).toString()//? page=1&size=10
     
     

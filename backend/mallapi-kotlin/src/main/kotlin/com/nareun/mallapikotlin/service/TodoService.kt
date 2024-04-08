@@ -1,7 +1,8 @@
 package com.nareun.mallapikotlin.service
 
+import com.nareun.mallapikotlin.dto.PageRequestDTO
+import com.nareun.mallapikotlin.dto.PageResponseDTO
 import com.nareun.mallapikotlin.dto.TodoDTO
-import org.springframework.data.domain.AbstractPageRequest
 
 interface TodoService {
      fun register(todoDTO: TodoDTO) : Long?
@@ -12,5 +13,6 @@ interface TodoService {
 
      fun remove(tno:Long)
 
-//     fun list(pageRequest: AbstractPageRequest) : PageResponseDTO<TodoDTO>
+     fun list(pageRequestDTO: PageRequestDTO): PageResponseDTO<TodoDTO>
+
 }
