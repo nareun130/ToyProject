@@ -50,7 +50,7 @@ class TodoServiceImpl(
     }
 
     override fun modify(todoDTO: TodoDTO) {
-        val result = todoRepository.findById(todoDTO.tno)// TodoDto가 null을 허용하면 TypeMismatch에러 발생
+        val result = todoRepository.findById(todoDTO.tno?:0)// TodoDto가 null을 허용하면 TypeMismatch에러 발생
         val todo = result.orElseThrow()
 
         todo.changeTitle(todoDTO.title?:"") // null일 경우 ""로 설정
