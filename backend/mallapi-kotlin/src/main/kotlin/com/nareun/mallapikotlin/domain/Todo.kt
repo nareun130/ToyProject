@@ -10,25 +10,31 @@ data class Todo(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    val tno: Long?= null, // null을 허용
 //    val tno :Long = 0,
-        val tno : Long?=null,
+    private  val tno: Long? = null,
 
-    var title: String,
+    private var title: String,
 
-    var writer: String,
+    private var writer: String,
 
-    var complete: Boolean,
+    private var complete: Boolean,
 
-    var dueDate: LocalDate
+    private var dueDate: LocalDate
+
+
 ) {
-   fun changeTitle(title:String) {
-       this.title = title
-   }
+    constructor() : this(null,"","",false, LocalDate.now())
+    fun getTno():Long{
+        return  this.tno?:0
+    }
+    fun changeTitle(title: String) {
+        this.title = title
+    }
 
     fun changeComplete(complete: Boolean) {
         this.complete = complete
     }
 
-    fun changeDueDate(dueDate: LocalDate){
+    fun changeDueDate(dueDate: LocalDate) {
         this.dueDate = dueDate
     }
 }

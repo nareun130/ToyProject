@@ -1,5 +1,7 @@
 package com.nareun.mallapikotlin.service
 
+import com.nareun.mallapikotlin.dto.PageRequestDTO
+import com.nareun.mallapikotlin.dto.PageResponseDTO
 import com.nareun.mallapikotlin.dto.TodoDTO
 import com.nareun.mallapikotlin.repository.TodoRepositoryTests
 import lombok.extern.log4j.Log4j2
@@ -40,5 +42,15 @@ class TodoServiceTests {
 
         log.info(todoDTO.toString())
 
+    }
+
+    @Test
+    fun testList(){
+        val pageRequestDTO : PageRequestDTO = PageRequestDTO(
+            page = 2,
+            size = 10
+        )
+        val response : PageResponseDTO<TodoDTO> = todoService.list(pageRequestDTO)
+        log.info(response.toString())
     }
 }

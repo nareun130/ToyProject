@@ -22,17 +22,17 @@ import java.time.LocalDate
 class TodoServiceImpl(
     private val modelMapper: ModelMapper,
     private val todoRepository: TodoRepository
-) : TodoService{
+) : TodoService {
 
     val log = LoggerFactory.getLogger(TodoServiceImpl::class.java)
 
-    override fun register(todoDTO: TodoDTO) : Long? {
+    override fun register(todoDTO: TodoDTO): Long? {
         log.info("------------")
 
         val todo = modelMapper.map(todoDTO, Todo::class.java)
         val savedTodo = todoRepository.save(todo);
 
-        return savedTodo.tno
+        return savedTodo.getTno()
 
     }
 
@@ -50,11 +50,11 @@ class TodoServiceImpl(
     }
 
     override fun modify(todoDTO: TodoDTO) {
-        val result = todoRepository.findById(todoDTO.tno?:0)// TodoDto가 null을 허용하면 TypeMismatch에러 발생
+        val result = todoRepository.findById(todoDTO.tno ?: 0)// TodoDto가 null을 허용하면 TypeMismatch에러 발생
         val todo = result.orElseThrow()
 
-        todo.changeTitle(todoDTO.title?:"") // null일 경우 ""로 설정
-        todo.changeDueDate(todoDTO.dueDate?: LocalDate.now())
+        todo.changeTitle(todoDTO.title ?: "") // null일 경우 ""로 설정
+        todo.changeDueDate(todoDTO.dueDate)
         todo.changeComplete(todoDTO.complete)
 
         todoRepository.save(todo)
@@ -65,18 +65,24 @@ class TodoServiceImpl(
         todoRepository.deleteById(tno)
     }
 
-    override fun list(pageRequestDTO: PageRequestDTO):PageResponseDTO<TodoDTO>{
-      val pageable : Pageable = PageRequest.of(
-          pageRequestDTO.page -1 ,
-          pageRequestDTO.size,
-          Sort.by("tno").descending()
-      )
+    override fun list(pageRequestDTO: PageRequestDTO): PageResponseDTO<TodoDTO> {
+        val pageable: Pageable = PageRequest.of(
+            pageRequestDTO.page - 1,
+            pageRequestDTO.size,
+            Sort.by("tno").descending()
+        )
 
-        val result  = todoRepository.findAll(pageable)
-        val dtoList  = result.content.map { todo -> modelMapper.map(todo, TodoDTO::class.java) }
+        val result = todoRepository.findAll(pageable)
+        val dtoList = result.content.map { todo -> modelMapper.map(todo, TodoDTO::class.java) }
 
         val totalCount = result.totalElements
 
-        return PageResponseDTO.withAll<TodoDTO>()
+//        return PageResponseDTO.withAll(dtoList, pageRequestDTO, totalCount)
 
+        return PageResponseDTO.withAll(
+            dtoList = dtoList,
+            pageRequestDTO = pageRequestDTO,
+            totalCount = totalCount
+        )
+    }
 }
