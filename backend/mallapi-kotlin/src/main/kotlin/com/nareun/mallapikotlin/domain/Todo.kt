@@ -22,6 +22,7 @@ data class Todo(
 
 
 ) {
+    //기본 생성자를 생성 해주지 않으면 modelMapper에서 만들지를 못하는 거 같다.
     constructor() : this(null,"","",false, LocalDate.now())
     fun getTno():Long{
         return  this.tno?:0

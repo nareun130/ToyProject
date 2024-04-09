@@ -1,4 +1,5 @@
 import React from 'react';
+import AddComponent from '../../components/todo/AddComponent';
 // import AddComponent from '../../components/products/AddComponent';
 
 const AddPage: React.FC = () => {
@@ -8,7 +9,7 @@ const AddPage: React.FC = () => {
       Products Add Page  
     </div>
 
-    {/* <AddComponent/>  */}
+    <AddComponent/> 
 
   </div>
 

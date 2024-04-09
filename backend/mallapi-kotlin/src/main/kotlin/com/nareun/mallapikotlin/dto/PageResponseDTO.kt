@@ -16,6 +16,7 @@ data class PageResponseDTO<E>(
 ){
     companion object{
         fun <E> withAll(dtoList: List<E>, pageRequestDTO: PageRequestDTO,totalCount: Long) : PageResponseDTO<E>{
+            //페이지 그룹의 마지막 페이지 번호 -> pageSize에 따라서 동적으로 달라짐.
             val end = (Math.ceil(pageRequestDTO.page/10.0)*10).toInt()
             val start = end - 9
             val last = (Math.ceil(totalCount / pageRequestDTO.size.toDouble())).toInt()
