@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { getOne } from '../../apis/todoApi.ts';
-import useCustomMove, { TCustomMove } from '../../hooks/useCustomMove.ts';
+import useCustomMove from '../../hooks/useCustomMove.ts';
 
-// import {Todo} from '../../interfaces/Todo'
-// import useCustomMove,  {TCustomMove} from '../../hooks/useCustomMove';
+import {Todo} from '../../interfaces/Todo'
 
 interface Tno {
 
@@ -11,33 +10,25 @@ interface Tno {
 
 }
 
-const initState = {
-    tno : 0,
-    title : '',
-    writer : '',
-    dueDate : null,
-    complete : false
-}
-
 //* React.FC = React.FunctionalComponent
-const ReadComponent: React.FC<Tno> = ({tno}):JSX.Element => {
+const ReadComponent: React.FC<Tno> = ({tno}:Tno):JSX.Element => {
 
 
-  const [todo, setTodo] = React.useState(initState)
+  const [todo, setTodo] = React.useState<Todo>()
 
   const {moveToList, moveToModify} = useCustomMove()
 
 
   React.useEffect(()=>{
-    getOne(tno).then(data => {
-        console.log(data)
-        setTodo(data)
+    getOne(tno).then((data:Todo)=>{
+      console.log(data)
+      setTodo(data)
     })
   },[tno])
   
-//   if(!todo) {
-//     return <></>
-//   }
+  if(!todo) {
+    return <></>
+  }
 
   return (  
     <div className = "border-2 border-sky-200 mt-10 m-2 p-4 ">
@@ -72,7 +63,7 @@ const ReadComponent: React.FC<Tno> = ({tno}):JSX.Element => {
     )
 }
   
-const makeDiv = (title:string, value: string |number) : JSX.Element =>       
+const makeDiv = (title:string, value: string |number) : JSX.Element =>
 <div className="flex justify-center">
   <div className="relative mb-4 flex w-full flex-wrap items-stretch">
     <div className="w-1/5 p-6 text-right font-bold">{title}</div>
