@@ -6,9 +6,11 @@ interface PageProps{
   serverData : PageResponse<Todo>
 
   // movePage : Function
-  //TODO : 수정 필요
+  //TODO : 수정 필요 -> 현수형에게 질문
   movePage: (params: { page: number }|PageParam) => void;
   // movePage : (params:PageParam) => void
+  // movePage:(params:{page:number}) => void;
+  
 
 }
 
@@ -19,6 +21,7 @@ const PageComponent: React.FC<PageProps> = ({serverData, movePage}: PageProps) =
       <div className="m-6 flex justify-center">
   
       {serverData.prev ? 
+
         <div 
         className="m-2 p-2 w-16 text-center  font-bold text-blue-400 "
         onClick={() => movePage({page:serverData.prevPage} )}>

@@ -11,11 +11,14 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import java.time.LocalDate
-import java.util.Optional
+import java.util.*
 
 @SpringBootTest
 @Log4j2
 class TodoRepositoryTests {
+
+    @Autowired
+    private lateinit var productRepository: ProductRepository
 
     @Autowired
     private lateinit var todoRepository: TodoRepository
@@ -74,5 +77,14 @@ class TodoRepositoryTests {
 //      data총 개수
         log.info(result.totalElements.toString())
         result.content.forEach{todo -> log.info(todo.toString())}
+    }
+
+    @Test
+    fun testList() {
+        val pageable: Pageable = PageRequest.of(0,10, Sort.by("pno").descending())
+        val result : Page<Array<Any>>  = productRepository.selectList(pageable)
+
+        result.content.forEach { arr -> log.info(arr.contentToString()) }
+        //contentToString() = Arrays.toString(this)
     }
 }

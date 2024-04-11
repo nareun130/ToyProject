@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-// interface ResultModalProps {
-//   title: string,
-//   content: string,
-//   callbackFn: () => void
-// }
+interface ResultModalProps {
+  title: string,
+  content: string,
+  callbackFn: () => void
+}
 
-const ResultModal: React.FC<any> = ({title,content,callbackFn}) => {
+const ResultModal: React.FC<ResultModalProps> = ({title,content,callbackFn}) => {
   return ( 
     <div 
     className={`fixed top-0 left-0 z-[1055] flex h-full w-full  justify-center bg-black bg-opacity-20`}  

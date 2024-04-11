@@ -86,7 +86,6 @@ const ModifyComponent = ({tno}:Tno) => {
     }else {
       moveToRead(tno)
     }
-    
   }
   
 
