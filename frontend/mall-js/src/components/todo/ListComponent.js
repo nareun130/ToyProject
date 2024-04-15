@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react"
+import useCustomMove from "../../hooks/useCustomMove"
 import PageComponent from "../common/PageComponent"
+import { getList } from "../../api/todoApi"
 
 const initState = {
     dtoList:[],
@@ -21,7 +24,7 @@ const initState = {
     const [serverData, setServerData] = useState(initState)
   
   
-    useEffect(() => {
+    useEffectt(() => {
   
       getList({page,size}).then(data => {
         console.log(data)
