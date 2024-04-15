@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Todo {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tno;
@@ -28,6 +28,18 @@ public class Todo {
 
     private boolean complete;
 
-    private LocalDate localDate;
+    private LocalDate dueDate;
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeComplete(boolean complete) {
+        this.complete = complete;
+    }
+
+    public void changeDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 
 }
