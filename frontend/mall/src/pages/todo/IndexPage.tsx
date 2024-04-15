@@ -5,6 +5,7 @@ import BasicLayout from "../../layouts/BasicLayout";
 //* Record<string, unknown> 프로퍼티 값에 unknown지정 - 모든 타입의 값이 할당될 수 있는 객체임을 명시
 const IndexPage:React.FC<Record<string, never>> = () => {
 
+    
     const navigate  = useNavigate()
 
     const handleClickList = () : void => {
