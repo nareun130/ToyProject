@@ -18,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.zerock.mallapi.security.filter.JWTCheckFilter;
 import com.zerock.mallapi.security.handler.APILoginFailHandler;
 import com.zerock.mallapi.security.handler.APILoginSuccessHandler;
+import com.zerock.mallapi.security.handler.CustomAccessDeniedHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -56,7 +57,10 @@ public class CustomSecurityConfig {
     //* UsernamePasswordAuthenticationFilter전에 JWTCheckFilter를 실행
     //* UsernamePasswordAuthenticationFilter : 스프링 시큐리티의 기본필터 -> 폼 로그인 처리 시 주로 사용
     http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
-
+    //* 접근 제한 핸들러 붙여주기
+    http.exceptionHandling(config -> {
+      config.accessDeniedHandler(new CustomAccessDeniedHandler());
+    });
     return http.build();
 
   }
