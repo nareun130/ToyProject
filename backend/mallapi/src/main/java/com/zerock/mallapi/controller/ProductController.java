@@ -52,22 +52,6 @@ public class ProductController {
     return Map.of("result", pno);
   }
 
-  
-  // @PostMapping("/")
-  // public Map<String, String> register(ProductDTO productDTO){
-    
-  //   log.info("rgister: " + productDTO);
-
-  //   List<MultipartFile> files = productDTO.getFiles();
-
-  //   List<String> uploadFileNames = fileUtil.saveFiles(files);
-
-  //   productDTO.setUploadFileNames(uploadFileNames);
-
-  //   log.info(uploadFileNames);
-
-  //   return Map.of("RESULT", "SUCCESS");
-  // }
 
   @GetMapping("/view/{fileName}")
   public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName){
