@@ -26,18 +26,19 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info(authentication);
         log.info("------------------------");
 
-        MemberDTO memberDTO = (MemberDTO)authentication.getPrincipal();
-        
-        Map<String,Object> claims = memberDTO.getClaims();
+        MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
 
-        String accessToken = JWTUtil.generateToken(claims, 10);//10분간 유효
-        String refreshToken = JWTUtil.generateToken(claims, 60*24);//24시간 유효
+        Map<String, Object> claims = memberDTO.getClaims();
+
+        //TODO: 변경필요
+        String accessToken = JWTUtil.generateToken(claims, 1);// 10분간 유효
+        String refreshToken = JWTUtil.generateToken(claims, 60 * 24);// 24시간 유효
         claims.put("accessToken", accessToken);
         claims.put("refreshToken", refreshToken);
 
         Gson gson = new Gson();
 
-        String jsonStr = gson.toJson(claims); //객체를 json문자열로
+        String jsonStr = gson.toJson(claims); // 객체를 json문자열로
 
         response.setContentType("application/json; charset=UTF-8");
         PrintWriter printWriter = response.getWriter();
