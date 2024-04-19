@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login, loginPostAsync } from "../../slices/loginSlice";
-// import useCustomLogin from "../../hooks/useCustomLogin";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import KakaoLoginComponent from "./KakaoLoginComponent";
 
 const initState = {
   email: "",
@@ -10,9 +9,7 @@ const initState = {
 
 const LoginComponent = () => {
   const [loginParam, setLoginParam] = useState({ ...initState });
-
-  //   const { doLogin, moveToPath } = useCustomLogin();
-  const dispatch = useDispatch();
+  const { doLogin, moveToPath } = useCustomLogin();
 
   const handleChange = (e) => {
     loginParam[e.target.name] = e.target.value;
@@ -20,23 +17,17 @@ const LoginComponent = () => {
     setLoginParam({ ...loginParam });
   };
 
-  //   const handleClickLogin = (e) => {
-  //     doLogin(loginParam) // loginSlice의 비동기 호출
-  //       .then((data) => {
-  //         console.log(data);
-
-  //         if (data.error) {
-  //           alert("이메일과 패스워드를 다시 확인하세요");
-  //         } else {
-  //           alert("로그인 성공");
-  //           moveToPath("/");
-  //         }
-  //       });
-  //   };
-  const handleClickLogin = (e) =>{
-    // dispatch(login(loginParam));
-    dispatch(loginPostAsync(loginParam))
-  }
+  const handleClickLogin = (e) => {
+    doLogin(loginParam)
+      .then((data) => {
+        if (data.error) {
+          alert("이메일과 패스워드를 체크");
+        } else {
+          alert("로그인 성공");
+          moveToPath("/");
+        }
+      });
+  };
 
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
@@ -72,13 +63,13 @@ const LoginComponent = () => {
           <div className="w-2/5 p-6 flex justify-center font-bold">
             <button
               className="rounded p-4 w-36 bg-blue-500 text-xl  text-white"
-              onClick={handleClickLogin}
-              >
+              onClick={handleClickLogin}>
               LOGIN
             </button>
           </div>
         </div>
       </div>
+      <KakaoLoginComponent/>
     </div>
   );
 };

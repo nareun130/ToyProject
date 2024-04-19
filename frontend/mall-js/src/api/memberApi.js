@@ -9,12 +9,9 @@ export const loginPost = async (loginParam) => {
   };
 
     const form = new FormData();
+    //TODO : application/x-www-form-urlencoded 방식으로 전송 안됨.
     form.append("username", loginParam.email);
     form.append("password", loginParam.pw);
-    // const params = new URLSearchParams();
-    // params.append('username',loginParam.email);
-    // params.append('password',loginParam.pw);
-    // const body = `username=${encodeURIComponent(loginParam.email)}&password=${encodeURIComponent(loginParam.pw)}`;
 
   const res = await axios.post(`${host}/login`,form, header);
 
