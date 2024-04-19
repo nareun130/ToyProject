@@ -62,7 +62,7 @@ public class ProductController {
   }
 
   // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")//? 임시 권한 설정 -> MemberDTO에서 ROLE_을 붙여줌.
-  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  @PreAuthorize("hasAnyRole('ROLE_USER')")
   @GetMapping("/list")
   public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO) {
 
