@@ -24,18 +24,20 @@ export const loginPostAsync = createAsyncThunk("loginPostAsync", (param) => {
 const loginSlice = createSlice({
   //슬라이스 이름. 액션타입 생성 시 사용
   name: "LoginSlice",
-  //쿠키가 없으면 초깃값 아ㅛㅇ
+  //쿠키가 없으면 초깃값 이용
   initialState: loadMemberCookie() || initState,
   //상태변화시키는 리듀서 함수들 정의
   reducers: {
     //*login(), logout() : 리듀서 함수
     login: (state, action) => {
       console.log("login...");
-      //{eamil,pw} 구성
-      const data = action.payload;
 
+      //소셜로그인 회원 사용
+      const payload = action.payload;
+
+      setCookie("member", JSON.stringify(payload), 1); //1일 동안 Cookie저장
       //새로운 상태
-      return { email: data.email };
+      return payload;
     },
     logout: (state, action) => {
       console.log("logout...");
