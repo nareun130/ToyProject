@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
 import { getList } from "../../api/productsApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import FetchingModal from "../common/FetchingModal";
 
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { API_SERVER_HOST } from "../../api/todoApi";
-import PageComponent from "../common/PageComponent";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import PageComponent from "../common/PageComponent";
 
 const host = API_SERVER_HOST;
 
@@ -23,30 +23,36 @@ const initState = {
 };
 
 const ListComponent = () => {
-  const { exceptionHandle } = useCustomLogin();
+  const { moveToLoginReturn } = useCustomLogin();
+
   const { page, size, refresh, moveToList, moveToRead } = useCustomMove();
 
-  //serverData는 나중에 사용
-  const [serverData, setServerData] = useState(initState);
+  //* staleTime의 위치 주의!!
+  const { isFetching, data, error, isError } = useQuery(
+    ["products/list", { page, size, refresh }],
+    () => getList({ page, size }),
+    { staleTime: 1000 * 5 }
+  );
+  // const queryClient = useQueryClient(); // 리액트 쿼리 초기화를 위한 객체
 
-  //for FetchingModal
-  const [fetching, setFetching] = useState(false);
+  //* 동일 페이지를 다시 클릭하면 리액트 쿼리의 키 값의 데이터를 무효화 시켜서 다시 데이터 조회
+  const handleClickPage = (pageParam) => {
+    //& -> useQuery에 refresh와 staleTime을 설정함으로써 필요가 없어짐.
+    // if (pageParam.page === parseInt(page)) {
+    //   queryClient.invalidateQueries("products/list");
+    // }
+    moveToList(pageParam);
+  };
 
-  useEffect(() => {
-    setFetching(true);
-
-    getList({ page, size })
-      .then((data) => {
-        console.log(data);
-        setServerData(data);
-        setFetching(false);
-      })
-      .catch((err) => exceptionHandle(err));
-  }, [page, size, refresh]);
+  if (isError) {
+    console.log(error);
+    return moveToLoginReturn();
+  }
+  const serverData = data || initState;
 
   return (
     <div className="border-2 border-blue-100 mt-10 mr-2 ml-2">
-      {fetching ? <FetchingModal /> : <></>}
+      {isFetching ? <FetchingModal /> : <></>}
 
       <div className="flex flex-wrap mx-auto p-6">
         {serverData.dtoList.map((product) => (
@@ -79,7 +85,7 @@ const ListComponent = () => {
 
       <PageComponent
         serverData={serverData}
-        movePage={moveToList}></PageComponent>
+        movePage={handleClickPage}></PageComponent>
     </div>
   );
 };

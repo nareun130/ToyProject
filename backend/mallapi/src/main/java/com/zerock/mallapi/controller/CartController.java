@@ -36,9 +36,10 @@ public class CartController {
     public List<CartItemListDTO> changeCart(@RequestBody @P("itemDTO") CartItemDTO itemDTO) {
         // & @P : SpringSecurity의 Parameter를 위해 itemDTO를 붙여줌.
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        log.info("똑같 ? " + itemDTO.getEmail() == name);
+        // Authentication authentication =
+        // SecurityContextHolder.getContext().getAuthentication();
+        // String name = authentication.getName();
+        // log.info("똑같 ? " + itemDTO.getEmail() == name);
         log.info(itemDTO);
 
         if (itemDTO.getQty() <= 0) {

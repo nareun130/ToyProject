@@ -4,6 +4,7 @@ import { postAdd } from "../../api/productsApi";
 import FetchingModal from "../common/FetchingModal";
 import ResultModal from "../common/ResultModal";
 import useCustomMove from "../../hooks/useCustomMove";
+import { useMutation } from "@tanstack/react-query";
 
 const initState = {
   pname: "",
@@ -25,6 +26,7 @@ const AddComponent = () => {
     product[e.target.name] = e.target.value;
     setProduct({ ...product });
   };
+  const addMutation = useMutation((product) => postAdd(product));
 
   const handleClickAdd = (e) => {
     const files = uploadRef.current.files;
@@ -42,26 +44,36 @@ const AddComponent = () => {
 
     console.log(formData);
 
-    setFetching(true);
+    // setFetching(true);
 
-    postAdd(formData).then((data) => {
-      setFetching(false);
-      setResult(data.result);
-    });
+    // postAdd(formData).then((data) => {
+    //   setFetching(false);
+    //   setResult(data.result);
+    // });
+    addMutation.mutate(formData);
   };
 
   const closeModal = () => {
     //ResultModal 종료
 
-    setResult(null);
+    // setResult(null);
     moveToList({ page: 1 }); //모달 창이 닫히면 이동
   };
 
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
       {fetching ? <FetchingModal /> : <></>}
-
-      {result ? (
+      {addMutation.isLoading ? <FetchingModal /> : <></>}
+      {addMutation.isSuccess ? (
+        <ResultModal
+          title={"Product Add Result"}
+          content={`${addMutation.data.result}번 등록 완료`}
+          callbackFn={closeModal}
+        />
+      ) : (
+        <></>
+      )}
+      {/* {result ? (
         <ResultModal
           title={"Product Add Result"}
           content={`${result}번 등록 완료`}
@@ -69,7 +81,7 @@ const AddComponent = () => {
         />
       ) : (
         <></>
-      )}
+      )} */}
 
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
