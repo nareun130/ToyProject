@@ -32,7 +32,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
             "   CartItem ci inner join Cart c on ci.cart = c " +
             " where " +
             "   c.owner.email = :email and ci.product.pno = :pno")
-    public CartItem getCartItemOfPno(@Param("email") String email, @Param("pno") Long pno);
+    public CartItem getItemOfPno(@Param("email") String email, @Param("pno") Long pno);
 
     // 아이템이 속한 장바구니 번호
     // * 해당 아이템 삭제 후 해당 아이템이 속한 장바구니의 모든 아이템을 알아내기위해
