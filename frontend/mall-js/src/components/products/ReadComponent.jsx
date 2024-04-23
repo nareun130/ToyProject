@@ -3,7 +3,8 @@ import { getOne } from "../../api/productsApi";
 import { API_SERVER_HOST } from "../../api/todoApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import FetchingModal from "../common/FetchingModal";
-
+import useCustomLogin from "../../hooks/useCustomLogin";
+import useCustomCart from "../../hooks/useCustomCart";
 const initState = {
   pno: 0,
   pname: "",
@@ -18,36 +19,29 @@ const ReadComponent = ({ pno }) => {
   //화면 이동용 함수
   const { moveToList, moveToModify } = useCustomMove();
   //로그인 정보
-  // const { loginState } = useCustomLogin();
+  const { loginState } = useCustomLogin();
   //장바구니
-  // const { changeCart, cartItems } = useCustomCart();
+  const { changeCart, cartItems } = useCustomCart();
 
-  const { isFetching, data } = useQuery([
-    ["products", pno],
-    () => getOne(pno),
-    {
-      //10초가 지나면 신선x -> 다시 페칭
-      staleTime: 1000 * 10,
-      retry: 1,
-    },
-  ]);
-  const product = data || initState
-
+  const { isFetching, data } = useQuery(["products", pno], () => getOne(pno), {
+    staleTime: 1000 * 10,
+    retry: 1,
+  });
+  console.log(data);
+  const product = data || initState;
 
   const handleClickAddCart = () => {
-    // let qty = 1;
-
-    // const addedItem = cartItems.filter((item) => item.pno === parseInt(pno))[0];
-
-    // if (addedItem) {
-    //   if (
-    //     window.confirm("이미 추가된 상품입니다. 추가하시겠습니까? ") === false
-    //   ) {
-    //     return;
-    //   }
-    //   qty = addedItem.qty + 1;
-    // }
-    // changeCart({ email: loginState.email, pno: pno, qty: qty });
+    let qty = 1;
+    const addedItem = cartItems.filter((item) => item.pno === parseInt(pno))[0];
+    if (addedItem) {
+      if (
+        window.confirm("이미 추가된 상품입니다. 추가하시겠습니까? ") === false
+      ) {
+        return;
+      }
+      qty = addedItem.qty + 1;
+    }
+    changeCart({ email: loginState.email, pno: pno, qty: qty });
   };
 
   return (

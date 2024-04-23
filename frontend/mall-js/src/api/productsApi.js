@@ -25,9 +25,9 @@ export const postAdd = async (product) => {
   
   }
   
-  export const getOne = async (tno) => {
+  export const getOne = async (pno) => {
   
-    const res = await jwtAxios.get(`${host}/${tno}` )
+    const res = await jwtAxios.get(`${host}/${pno}` )
   
     return res.data
   
