@@ -2,7 +2,7 @@ import { getList } from "../../api/productsApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import FetchingModal from "../common/FetchingModal";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { API_SERVER_HOST } from "../../api/todoApi";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import PageComponent from "../common/PageComponent";
@@ -33,7 +33,6 @@ const ListComponent = () => {
     () => getList({ page, size }),
     { staleTime: 1000 * 5 }
   );
-  // const queryClient = useQueryClient(); // 리액트 쿼리 초기화를 위한 객체
 
   //* 동일 페이지를 다시 클릭하면 리액트 쿼리의 키 값의 데이터를 무효화 시켜서 다시 데이터 조회
   const handleClickPage = (pageParam) => {

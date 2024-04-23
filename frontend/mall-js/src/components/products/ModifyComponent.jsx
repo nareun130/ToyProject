@@ -19,12 +19,8 @@ const host = API_SERVER_HOST;
 
 const ModifyComponent = ({ pno }) => {
   const [product, setProduct] = useState(initState);
-  //결과 모달
-  const [result, setResult] = useState(null);
   //이동용 함수
   const { moveToRead, moveToList } = useCustomMove();
-
-  const [fetching, setFetching] = useState(false);
 
   const uploadRef = useRef();
   //* 무한으로 staleTime : 수정 중간에 API호출 x
@@ -105,8 +101,12 @@ const ModifyComponent = ({ pno }) => {
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
       {/* 기존 모달 삭제 */}
-      {query.isFetching || delMutation.isLoading || modMutation.isLoading? <FetchingModal /> : <></>}
-      {delMutation.isSuccess||modMutation.isSuccess ? (
+      {query.isFetching || delMutation.isLoading || modMutation.isLoading ? (
+        <FetchingModal />
+      ) : (
+        <></>
+      )}
+      {delMutation.isSuccess || modMutation.isSuccess ? (
         <ResultModal
           title={"처리결과"}
           content={"정상처리 되었습니다."}

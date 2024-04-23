@@ -17,9 +17,6 @@ const AddComponent = () => {
   const [product, setProduct] = useState({ ...initState });
   const uploadRef = useRef();
 
-  const [fetching, setFetching] = useState(false);
-  const [result, setResult] = useState(null);
-
   const { moveToList } = useCustomMove(); //이동을 위한 함수
 
   const handleChangeProduct = (e) => {
@@ -62,7 +59,6 @@ const AddComponent = () => {
 
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-      {fetching ? <FetchingModal /> : <></>}
       {addMutation.isLoading ? <FetchingModal /> : <></>}
       {addMutation.isSuccess ? (
         <ResultModal

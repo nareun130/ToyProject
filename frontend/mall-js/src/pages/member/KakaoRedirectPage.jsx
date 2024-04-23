@@ -1,16 +1,12 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getAccessToken, getMemberWithAccessToken } from "../../api/kakaoApi";
-import { useDispatch } from "react-redux";
-import { login } from "../../slices/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
 
 const KakaoRedirectPage = () => {
   const [searchParams] = useSearchParams();
 
-  const dispatch = useDispatch();
-
-  const { moveToPath } = useCustomLogin();
+  const { moveToPath, saveAsCookie } = useCustomLogin();
 
   const authCode = searchParams.get("code");
 
@@ -22,7 +18,7 @@ const KakaoRedirectPage = () => {
         console.log("--------------");
         console.log(memberInfo);
 
-        dispatch(login(memberInfo));
+        saveAsCookie(memberInfo);
         //소설 회원이 아닌 경우
         if (memberInfo && !memberInfo.social) {
           moveToPath("/");

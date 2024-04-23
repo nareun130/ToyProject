@@ -27,8 +27,6 @@ const ReadComponent = ({ pno }) => {
     staleTime: 1000 * 10,
     retry: 1,
   });
-  console.log(data);
-  const product = data || initState;
 
   const handleClickAddCart = () => {
     let qty = 1;
@@ -43,6 +41,8 @@ const ReadComponent = ({ pno }) => {
     }
     changeCart({ email: loginState.email, pno: pno, qty: qty });
   };
+
+  const product = data || initState;
 
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
